@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CrewTrace – crew health and habitat dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <linearGradient id="skin" gradientUnits="userSpaceOnUse" x1="0" x2="200"><stop offset="0" style="stop-color:var(--fig2)"/><stop offset=".5" style="stop-color:var(--fig1)"/><stop offset="1" style="stop-color:var(--fig2)"/></linearGradient>
+ <path id="half" d="M100 52L92 52L91 66C80 70 66 72 58 78C48 82 42 92 41 108C40 128 38 148 36 166C34 186 31 206 28 224C26 232 26 240 30 246C34 252 40 250 41 242C43 228 47 206 50 188C52 176 55 160 56 146C57 130 58 114 60 104C60 124 66 140 68 156C70 172 66 190 62 204C60 220 60 246 60 270C60 296 62 318 64 334C58 352 56 368 60 388C63 404 65 420 66 432C65 440 58 446 56 452L56 458L84 458C88 452 86 442 85 432C85 416 86 400 86 384C86 366 88 350 89 334C90 312 94 290 96 266C97 250 99 238 100 230z"/>
+ <g id="decL" fill="none"><path d="M99 90C88 88 76 88 64 92M99 118C88 124 74 122 68 110M62 94C52 102 48 116 50 130M52 128C54 142 52 152 50 162M100 150H90M100 170H89M100 190H90M100 210H92M80 264C78 292 80 314 82 328M70 272C68 294 68 314 70 326M72 374C68 390 70 406 74 422"/><ellipse cx="76" cy="352" rx="9" ry="6"/></g>
+ <path id="lgL" d="M96 110C86 104 74 112 72 134C71 152 78 162 92 158C97 150 98 128 96 110z"/>
+ <ellipse id="hrt" cx="106" cy="126" rx="12" ry="14" transform="rotate(-12 106 126)"/>
+ <ellipse id="kdL" cx="88" cy="186" rx="5.5" ry="9"/>
+ <path id="armL" d="M60 94C47 98 41 116 40 140C38 170 34 200 30 226C26 240 28 250 36 254C44 252 46 244 48 232C52 208 56 184 58 160C59 140 60 120 61 104z"/>
+ <path id="thL" d="M62 256C60 280 60 308 64 338L89 338C90 312 94 286 98 262z"/>
+ <path id="llL" d="M64 342C60 362 58 384 62 408C64 424 66 434 64 446C60 452 56 456 56 460L86 460C86 440 86 420 86 400C86 380 88 360 89 342z"/>
+ <g id="z-head"><ellipse cx="100" cy="26" rx="22" ry="29"/></g>
+ <g id="z-lungs"><use href="#lgL"/><use href="#lgL" transform="translate(200 0) scale(-1 1)"/></g>
+ <g id="z-heart"><use href="#hrt"/></g>
+ <g id="z-abdomen"><path d="M70 168C68 186 68 198 66 212L134 212C132 198 132 186 130 168z"/></g>
+ <g id="z-kidneys"><use href="#kdL"/><use href="#kdL" transform="translate(200 0) scale(-1 1)"/></g>
+ <g id="z-spine"><rect x="96" y="80" width="8" height="150" rx="4"/></g>
+ <g id="z-pelvis"><path d="M64 212C62 230 70 248 84 258L100 246L116 258C130 248 138 230 136 212z"/></g>
+ <g id="z-arms"><use href="#armL"/><use href="#armL" transform="translate(200 0) scale(-1 1)"/></g>
+ <g id="z-thighs"><use href="#thL"/><use href="#thL" transform="translate(200 0) scale(-1 1)"/></g>
+ <g id="z-lowerlegs"><use href="#llL"/><use href="#llL" transform="translate(200 0) scale(-1 1)"/></g>
+ <g id="L-skin">
+  <g stroke="var(--figln)" stroke-width="1.4" fill="url(#skin)"><use href="#half"/><use href="#half" transform="translate(200 0) scale(-1 1)"/><ellipse cx="100" cy="26" rx="20" ry="27"/></g>
+  <g fill="url(#skin)" stroke="none"><use href="#half"/><use href="#half" transform="translate(200 0) scale(-1 1)"/><ellipse cx="100" cy="26" rx="19.4" ry="26.4"/></g>
+  <g stroke="var(--figln)" stroke-width="1" opacity=".55" fill="none"><use href="#decL"/><use href="#decL" transform="translate(200 0) scale(-1 1)"/><path d="M100 120V224"/><path d="M99 24L97 34H103M92 44Q100 48 108 44"/></g>
+  <g fill="var(--figln)" opacity=".7"><ellipse cx="91" cy="20" rx="2.6" ry="1.6"/><ellipse cx="109" cy="20" rx="2.6" ry="1.6"/></g>
+  <g fill="none" stroke="var(--figln)" stroke-width="1" stroke-dasharray="3 2" opacity=".5"><use href="#lgL"/><use href="#lgL" transform="translate(200 0) scale(-1 1)"/><use href="#hrt"/><use href="#kdL"/><use href="#kdL" transform="translate(200 0) scale(-1 1)"/></g>
+ </g>
+<g id="ghost" fill="url(#skin)" stroke="var(--figln)" stroke-width="1"><use href="#half"/><use href="#half" transform="translate(200 0) scale(-1 1)"/><ellipse cx="100" cy="26" rx="20" ry="27"/></g>
+ <g id="musL" fill="#b9473e" stroke="#6e211d" stroke-width=".8" stroke-linejoin="round">
+  <path d="M92 54L91 70C80 72 68 74 60 80C66 85 80 86 92 84z" fill="#a83f37"/><path d="M91 56L99 82L95 85L87 62z" fill="#cf6a5e"/>
+  <path d="M60 80C48 82 42 92 41 108C44 114 52 112 58 104C62 96 62 86 60 80z" fill="#c4574c"/>
+  <path d="M99 90C88 88 74 91 62 100C62 114 72 126 86 128C94 124 99 112 99 90z" fill="#cc5f53"/>
+  <path d="M62 112C60 128 64 146 68 162C76 158 84 152 86 134C76 132 68 124 62 112z" fill="#a83f37"/>
+  <path d="M99 130L88 132C86 150 87 182 90 208L99 208z" fill="#d3695d"/>
+  <path d="M66 164C66 182 64 196 62 206C72 212 84 216 92 220L90 208C86 190 84 176 86 158C78 160 70 162 66 164z" fill="#b34b41"/>
+  <path d="M52 108C46 120 46 138 50 154C56 150 58 130 58 112z" fill="#cc5f53"/>
+  <path d="M48 160C42 180 38 204 34 228C40 226 46 212 50 198C54 186 56 170 54 160z"/>
+  <path d="M30 230C26 240 28 250 36 254C42 252 44 244 44 234z" fill="url(#skin)"/>
+  <path d="M62 228C60 238 66 246 76 248C84 246 92 238 94 228C86 226 72 224 62 228z" fill="#a83f37"/>
+  <path d="M62 252C60 286 62 314 66 336C70 328 72 300 72 270C70 260 66 254 62 252z" fill="#b34b41"/>
+  <path d="M72 252C72 286 74 316 78 338C84 332 84 302 84 264C80 256 76 252 72 252z" fill="#cc5f53"/>
+  <path d="M84 258C86 290 86 318 88 338C92 322 94 292 98 264C94 254 88 254 84 258z" fill="#c4574c"/>
+  <ellipse cx="77" cy="346" rx="7" ry="6" fill="#efe6d0" stroke="#8d826a"/>
+  <path d="M66 354C60 372 60 394 66 412C70 394 72 372 72 354z" fill="#b34b41"/><path d="M74 356C72 380 74 408 78 432C82 410 82 380 82 356z" fill="#cc5f53"/><path d="M84 354C88 372 88 394 84 412C80 394 80 372 82 354z" fill="#c4574c"/>
+  <path d="M60 440C58 450 56 456 56 460L84 460C86 452 86 444 84 438z" fill="url(#skin)"/>
+  <g fill="none" stroke="#6e211d" stroke-width=".5" opacity=".55"><path d="M96 96C88 100 78 104 68 106M96 108C88 112 78 116 70 116M96 120C90 124 82 126 76 126M90 150H99M89 170H99M90 190H99M72 262V330M78 262V334M92 270C91 290 90 310 90 330M69 362C66 380 68 398 70 408M60 90C54 94 48 100 46 108"/></g>
+ </g>
+ <g id="L-muscle"><g fill="#8a352f" stroke="#6e211d" stroke-width="1.2"><use href="#half"/><use href="#half" transform="translate(200 0) scale(-1 1)"/></g><use href="#musL"/><use href="#musL" transform="translate(200 0) scale(-1 1)"/>
+  <ellipse cx="100" cy="26" rx="20" ry="27" fill="#b9473e" stroke="#6e211d" stroke-width="1.2"/><ellipse cx="91" cy="21" rx="6" ry="4.5" fill="#d3695d"/><ellipse cx="109" cy="21" rx="6" ry="4.5" fill="#d3695d"/><ellipse cx="91" cy="21" rx="3" ry="2.2" fill="#f2efe6"/><ellipse cx="109" cy="21" rx="3" ry="2.2" fill="#f2efe6"/><circle cx="91" cy="21" r="1.2" fill="#222"/><circle cx="109" cy="21" r="1.2" fill="#222"/><path d="M100 24L96 36H104z" fill="#d9a79c"/><ellipse cx="100" cy="43" rx="8" ry="3.4" fill="#d3695d"/><path d="M84 28C84 40 92 50 100 52M116 28C116 40 108 50 100 52" fill="none" stroke="#6e211d" stroke-width=".6"/></g>
+ <g id="bnL"><g id="ribsL" fill="none" stroke="#c9bb98" stroke-width="2.6"></g><path d="M99 86C88 82 76 82 62 88" fill="none" stroke="#c9bb98" stroke-width="3.4"/>
+  <g fill="none" stroke="#efe6d0" stroke-linecap="round"><path d="M55 94L46 166" stroke-width="7"/><path d="M42 171L32 234" stroke-width="3.4"/><path d="M48 171L40 236" stroke-width="3.6"/><path d="M34 240L28 252M37 241L33 255M40 241L39 256M43 240L45 254" stroke-width="1.8"/><path d="M83 256L78 338" stroke-width="8.5"/><path d="M86 252L82 262" stroke-width="6"/><path d="M79 356L77 438" stroke-width="6.4"/><path d="M68 358L69 436" stroke-width="3.2"/><path d="M75 441L58 458M75 441L66 459M75 441L74 459M75 441L82 459" stroke-width="2.4"/></g>
+  <g fill="#efe6d0" stroke="#8d826a" stroke-width=".9"><circle cx="88" cy="251" r="6.5"/><ellipse cx="77" cy="343" rx="10" ry="5"/><ellipse cx="77" cy="351" rx="5" ry="6"/><path d="M98 206C86 196 70 196 62 206C58 222 64 240 78 252L90 258L98 246C100 232 100 218 98 206z"/><ellipse cx="88" cy="240" rx="4.5" ry="6.5" fill="#6b6558"/></g></g>
+ <g id="bnC" fill="#efe6d0" stroke="#8d826a" stroke-width=".9"><g id="spineG"></g><path d="M97 88H103V128L100 134L97 128z"/><path d="M92 206H108L104 244H96z"/><ellipse cx="100" cy="21" rx="19" ry="21"/><path d="M85 34C85 48 92 53 100 53C108 53 115 48 115 34C112 40 108 44 100 44C92 44 88 40 85 34z"/><ellipse cx="92" cy="22" rx="5" ry="4.5" fill="#3b3a38"/><ellipse cx="108" cy="22" rx="5" ry="4.5" fill="#3b3a38"/><path d="M100 28L96.5 37H103.5z" fill="#3b3a38"/><path d="M92 43H108" fill="none"/></g>
+ <g id="L-bone" style="filter:drop-shadow(0 0 .8px #6f6550)"><use href="#ghost" opacity=".3"/><use href="#bnL"/><use href="#bnL" transform="translate(200 0) scale(-1 1)"/><use href="#bnC"/></g>
+ <g id="L-organ"><use href="#ghost" opacity=".3"/><g opacity=".3"><use href="#bnL"/><use href="#bnL" transform="translate(200 0) scale(-1 1)"/><use href="#bnC"/></g>
+  <ellipse cx="100" cy="15" rx="15" ry="12" fill="#e7a3a3" stroke="#b86d6d"/><path d="M92 12C96 9 100 14 104 10M90 18C95 16 99 21 105 17M96 6C98 10 96 14 99 17" fill="none" stroke="#b86d6d" stroke-width=".7"/>
+  <rect x="97" y="52" width="6" height="56" rx="3" fill="#d9e4ee" stroke="#8aa0b4" stroke-width=".7"/><path d="M99 108L88 120M101 108L112 120" stroke="#8aa0b4" stroke-width="2.4" fill="none"/>
+  <g fill="#f0b8b3" fill-opacity=".9" stroke="#c98a85" stroke-width=".9"><use href="#lgL"/><use href="#lgL" transform="translate(200 0) scale(-1 1)"/></g>
+  <path d="M70 162C72 176 84 186 100 182C103 172 100 164 94 160C86 156 76 156 70 162z" fill="#8d3b2c" stroke="#5b2218" stroke-width=".9"/><path d="M104 164C114 160 124 168 122 182C120 190 108 190 104 182z" fill="#e59a8c" stroke="#b36a5c" stroke-width=".9"/>
+  <g fill="#9c3d3d" stroke="#5b1f1f" stroke-width=".8"><use href="#kdL"/><use href="#kdL" transform="translate(200 0) scale(-1 1)"/></g>
+  <path d="M78 200C78 192 90 192 100 196C110 192 122 192 122 200V210H78z" fill="#f1c9a5" stroke="#c9996f" stroke-width=".9"/><path d="M84 200C90 194 94 208 100 200C106 194 110 208 116 200" fill="none" stroke="#c9996f" stroke-width="1.6"/><ellipse cx="100" cy="226" rx="7" ry="6" fill="#e8d28a" stroke="#b49c4a"/>
+  <path d="M104 112C96 112 94 124 100 134C104 142 110 148 114 146C120 140 122 124 118 116C113 110 108 112 104 112z" fill="#c0392b" stroke="#7d1f16" stroke-width=".9"/><path d="M100 112C98 102 108 98 114 106" fill="none" stroke="#c0392b" stroke-width="3"/></g>
+</defs></svg>
+
+<div class="app">
+<header class="top">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.2"/><path d="M8.6 8.4h6.8"/><path d="M2.5 20.5c3-4.2 6-1.6 9.5-4.2s6.2-1.4 9.5-4.6"/><circle class="dot" cx="12" cy="16.3" r="1.1"/><circle class="dot" cx="21" cy="11.8" r="1.1"/><circle class="dot" cx="3" cy="20" r="1.1"/></svg></span>
+    <div><h1>CrewTrace</h1></div>
+  </div>
+  <div class="controls">
+    <div class="live-pill"><span class="dot" id="liveDot"></span><span id="liveLabel">NASA EDA replay</span><span class="time" id="missionClock">2018-08-19 · 12:18 UTC</span></div>
+    <button class="btn" id="exportButton">Export incident</button>
+    <button class="btn" id="resetButton">Reset scenario</button>
+    <button class="btn pri" id="pauseButton">Pause feed</button>
+  </div>
+  <div class="menu-wrap">
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <nav id="nav" role="tablist" aria-label="Sections" hidden></nav>
+  </div>
+</header>
+<main>
+<section id="t-dash">
+ <div class="dash">
+  <div class="col left">
+   <section class="card twin" aria-label="Selected astronaut">
+    <div class="gh"><div style="min-width:0;flex:1"><p class="eyebrow">Astronaut</p><select class="astroSel" id="astroSelDash" data-short="1" aria-label="Choose astronaut"></select><p class="note" id="mname" style="margin:6px 0 0">–</p></div><span id="dashAv"></span></div>
+    <div class="ready"><b id="rdy">–</b><span id="rdyLab">Health score</span></div>
+    <div class="bar" id="rdyBar"><i></i></div>
+    <div class="twinfig"><svg id="b3" viewBox="0 0 200 470" role="img" aria-label="Body with problem areas numbered" style="width:100%;max-height:300px;display:block"></svg></div>
+    <div class="kpis" id="dashVitals"></div>
+    <div class="chips" style="margin-top:12px"><span id="wx">Space weather: baseline</span><span id="hab">Hab-2 monitored</span></div>
+   </section>
+   <section class="card" aria-labelledby="crew-heading">
+    <div class="gh"><div><p class="eyebrow">Crew telemetry</p><h2 id="crew-heading" style="font-size:20px">Five crew members</h2></div><span class="tag s-ok" id="crewCount">0 reports</span></div>
+    <div class="crew-list" id="crewList"></div>
+    <p class="note" style="margin:12px 0 0"><b>Data boundary.</b> NASA RR-9 drives the environment stream. Crew vitals, symptoms, positions and the Hab-2 mapping are a labelled scenario.</p>
+   </section>
+  </div>
+
+  <div class="col mid">
+   <section class="card" aria-labelledby="map-heading">
+    <div class="gh"><div><p class="eyebrow">Crew location map</p><h2 id="map-heading">Habitat occupancy · live</h2></div><span class="zs s-ok" id="zoneState"><i></i><span id="zoneStateText">Hab-2 monitored</span></span></div>
+    <div class="hmap" id="habitatMap" role="group" aria-label="Top-down map of the habitat showing five crew members and a possible exposure region in Hab-2">
+      <div class="corr h"></div><div class="corr v"></div>
+      <div class="room command">Command</div>
+      <div class="room lab">Science Lab</div>
+      <div class="room hab" id="habTwoRoom"><div class="rh"><span>Hab-2</span><span class="atag" id="accessTag">MONITORING</span></div><span class="rc" id="mapCo2">3,931 ppm CO₂</span></div>
+      <div class="hazard-field" id="hazardField"></div>
+      <div class="airflow" id="airflow" aria-hidden="true">➜ ➜ ➜</div>
+      <div class="room exercise">Exercise</div>
+      <div class="room life">Life Support</div>
+      <div id="mapMarkers"></div>
+    </div>
+    <p class="note" style="margin:8px 0 0">Top-down schematic. Hab-2 shows the NASA RR-9 ISS cabin replay; other rooms and crew positions are illustrative.</p>
+    <div class="resp">
+      <div><b>Hab-2 response</b><div class="note">Controlled crew actions</div></div>
+      <div class="acts">
+        <button class="btn" id="restrictButton" aria-pressed="false">Restrict entry</button>
+        <button class="btn vent" id="ventButton" aria-pressed="false">Ventilate</button>
+        <button class="btn" id="isolateButton" aria-pressed="false">Isolate</button>
+      </div>
+    </div>
+    <div class="kpis" aria-label="Live environmental readings">
+      <div class="kpi s-bad"><small>RR-9 ISS CO₂</small><b id="co2Value">3,931</b> <span class="note">ppm</span><small class="sensor-meta">Primary · current</small></div>
+      <div class="kpi"><small>RR-9 temperature</small><b id="tempValue">23.4</b> <span class="note">°C</span><small class="sensor-meta">Primary · current</small></div>
+      <div class="kpi"><small>RR-9 humidity</small><b id="humidityValue">40</b> <span class="note">% RH</span><small class="sensor-meta">Primary · current</small></div>
+      <div class="kpi"><small>RR-9 total radiation</small><b id="radiationValue">0.318</b> <span class="note">mGy/day</span><small class="sensor-meta">Daily record · current</small></div>
+    </div>
+   </section>
+   <section class="card">
+    <div class="gh"><div><p class="eyebrow" id="probsFor">Body check</p><h2 style="font-size:20px">Top problems</h2></div><button class="btn" data-tab="profile">Open profile</button></div>
+    <div class="dashprobs" id="dashProbs"></div>
+   </section>
+  </div>
+
+  <div class="col right">
+   <section class="card alert-card s-ok" id="alertCard" aria-labelledby="alert-heading">
+    <div class="gh"><span class="tag" id="alertChip">Baseline monitoring</span><span class="note" id="alertTime">12:18 UTC</span></div>
+    <h3 id="alert-heading">Crew readings stable</h3>
+    <p id="alertCopy"></p>
+    <div class="chips" id="namedCrew"></div>
+    <p style="margin:14px 0 0"><button class="btn pri" id="ackButton">Acknowledge alert</button> <button class="btn" id="verifyButton">Request sensor check</button></p>
+   </section>
+   <section class="card">
+    <div class="gh"><div><p class="eyebrow">NASA EDA telemetry</p><h2 style="font-size:20px">RR-9 ISS cabin CO₂</h2></div><div><span class="big" id="chartValue">3,931</span> <span class="note">ppm</span></div></div>
+    <canvas id="co2Chart" role="img" aria-label="Live cabin carbon dioxide trend from the NASA RR-9 replay"></canvas>
+    <div class="gh note" style="margin:8px 0 0"><span id="sourceTimestamp"></span><span id="radiationDetails"></span></div>
+   </section>
+   <section class="card fcard s-ok" id="findingCard" aria-labelledby="finding-heading">
+    <div class="gh"><div><div class="eyebrow" id="findingKicker">Baseline state</div><h3 id="finding-heading">No shared health signal</h3></div><span class="tag" id="confidenceBadge">No alert</span></div>
+    <p id="findingCopy"></p>
+    <div class="chips"><span id="evidenceReports">0 symptom reports</span><span id="evidenceLocation">Separate rooms</span><span id="verificationEvidence">Primary sensor only</span></div>
+   </section>
+   <section class="card" id="nasaCard">
+    <div class="gh"><div><p class="eyebrow">NASA DONKI space weather</p><h2 style="font-size:20px">Radiation outlook</h2></div><span class="tag s-bad">Elevated</span></div>
+    <div class="kpis swk" id="nk" style="margin:0 0 12px"></div>
+    <div id="swTl"></div>
+    <div id="swDay"></div>
+    <div id="dose" style="margin-top:12px"></div>
+    <p class="note" id="nst" style="margin:8px 0 0">Saved NASA DONKI and NOAA GOES event records for 4–18 Sep 2017, the same days as the RR-9 radiation replay. Built in, so it works offline.</p>
+   </section>
+   <section class="card">
+    <div class="gh"><div><p class="eyebrow">Recommended care</p><h2 style="font-size:20px" id="careFor">Care</h2></div></div>
+    <div id="dashCare"></div>
+    <div id="dashCrew" style="margin-top:12px"></div>
+    <p style="margin:14px 0 0"><button class="btn pri" data-tab="health">Open health guide</button></p>
+   </section>
+  </div>
+ </div>
+</section>
+
+<section id="t-profile" hidden>
+  <div class="card phead"><span id="profAv"></span><div class="pinfo"><label class="sellab">Astronaut<select class="astroSel" aria-label="Choose astronaut"></select></label><div id="profInfo"></div></div><div id="profScore"></div></div>
+  <div class="card" style="margin-top:14px"><div class="gh"><h3>Symptoms</h3><span class="note">Tap to add or remove · crew-monitor reports are added automatically</span></div><div class="symchips" id="symChips"></div></div>
+  <div class="pgrid" style="margin-top:14px">
+    <div class="card"><div class="gh"><h3>Body check</h3><div class="seg"></div></div><svg id="b1" viewBox="0 0 200 470" role="group" aria-label="Clickable body with problem areas and symptoms" style="width:100%;max-height:600px"></svg>
+      <div class="legend"><span><i class="s-ok"></i>OK</span><span><i class="s-warn"></i>Watch</span><span><i class="s-bad"></i>Action</span><span><i class="sym"></i>Symptom</span></div></div>
+    <div class="stack"><div class="card" id="detail"></div><div class="card" id="probs"></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><div class="gh"><h3>Health values</h3><span class="note">Green band = healthy range · red = outside it · live values match crew telemetry</span></div><div id="cmp"></div></div>
+</section>
+
+<section id="t-health" hidden>
+  <div class="card phead"><span id="hgAv"></span><div class="pinfo"><label class="sellab">Health guide for<select class="astroSel" aria-label="Choose astronaut"></select></label><div id="hgInfo"></div></div><div id="hgScore"></div></div>
+  <div id="hgBody" style="margin-top:14px"></div>
+</section>
+
+<section id="t-alert" hidden>
+  <h2>Exposure and care</h2>
+  <p class="lead">Who was in Hab-2, for how long, and the estimated dose. When a crew member reports symptoms, their care advice appears here. The live alert is on the Dashboard.</p>
+  <div class="card tw" id="crewCare"></div>
+  <div class="grp">Hab-2 exposure by crew member</div>
+  <div class="card scroll"><table><thead><tr><th>Crew member</th><th>Location</th><th class="n">Time in Hab-2</th><th class="n">Estimated dose</th><th>Symptoms</th></tr></thead><tbody id="expBody"></tbody></table></div>
+  <p style="margin:14px 0 0"><button class="btn" data-tab="dash">Back to Dashboard</button></p>
+</section>
+
+<section id="t-env" hidden>
+  <h2>Telemetry log</h2>
+  <p class="lead">Every NASA OSDR Environmental Data Application record in this replay, mission RR-9. The highlighted row is the one shown on the Dashboard.</p>
+  <div class="grp" style="margin-top:0">Cabin telemetry</div>
+  <div class="card scroll"><table><thead><tr><th>Time</th><th class="n">CO₂ (ppm)</th><th class="n">Temperature (°C)</th><th class="n">Humidity (% RH)</th></tr></thead><tbody id="telBody"></tbody></table></div>
+  <div class="grp">Daily radiation record</div>
+  <div class="card scroll"><table><thead><tr><th>Date</th><th class="n">GCR (mGy/day)</th><th class="n">SAA (mGy/day)</th><th class="n">Total (mGy/day)</th></tr></thead><tbody id="radBody"></tbody></table></div>
+  <p class="note" style="margin-top:14px">NASA OSDR EDA RR-9 environment data. Crew and location overlay is simulated. <a href="https://visualization.osdr.nasa.gov/eda/" target="_blank" rel="noopener">Open the NASA data source</a>.</p>
+</section>
+
+<section id="t-about" hidden>
+  <h2>About and sources</h2>
+  <p class="lead">What CrewTrace shows and where the numbers come from.</p>
+  <div class="hgrid">
+   <article class="card hc"><div class="hch"><span class="itile" data-ic="layout"></span><h4>Dashboard</h4></div><p class="note" style="margin:0">Pick an astronaut and see their live health score and vitals, the habitat map, NASA cabin data, alerts, space weather and care.</p></article>
+   <article class="card hc"><div class="hch"><span class="itile" data-ic="user"></span><h4>Astronaut profile</h4></div><p class="note" style="margin:0">Portrait, symptoms, a clickable body and every health value against its healthy range.</p></article>
+   <article class="card hc"><div class="hch"><span class="itile" data-ic="steth"></span><h4>Health guide</h4></div><p class="note" style="margin:0">Care, food and drink for the chosen astronaut, built from their live values and symptoms.</p></article>
+  </div>
+  <div class="grp">Data</div>
+  <div class="card"><ul class="ilist">
+   <li><span data-ic="signal"></span><div><b>NASA data:</b> cabin CO₂, temperature, humidity and radiation come from NASA OSDR EDA, mission RR-9 (ISS), replayed one record per second. Space weather is a saved set of NASA DONKI and NOAA GOES events for 4–18 Sep 2017, the same days as the radiation replay, built into the page.</div></li>
+   <li><span data-ic="info"></span><div><b>Scenario:</b> crew names, vitals, symptoms, positions, exposure and dose are a labelled simulation, not real people.</div></li>
+   <li><span data-ic="link"></span><div><b>One crew, linked pages:</b> the selected astronaut, their live vitals and symptoms are the same on the Dashboard, crew telemetry, Profile and Health guide.</div></li>
+   <li><span data-ic="shield"></span><div><b>Health score:</b> 0 to 100%. Starts from body-area risks, then falls when live heart rate rises, SpO₂ drops, blood pressure climbs or symptoms appear.</div></li>
+   <li><span data-ic="alert"></span><div><b>Alerts</b> flag a shared place and time for checking. They are not a diagnosis.</div></li></ul>
+   <p class="note">Sources: <a href="https://visualization.osdr.nasa.gov/eda/" target="_blank" rel="noopener">NASA OSDR Environmental Data Application (RR-9 cabin and radiation data)</a>; space weather: <a href="https://www.stce.be/newsletter/html/2017/STCEnews20170915.html" target="_blank" rel="noopener">STCE newsletter, 15 Sep 2017 (flares)</a>, <a href="https://www.stce.be/esww15/program/Sept_2017_activity_summary.pdf" target="_blank" rel="noopener">STCE review of 4–15 Sep 2017 (storms, ground level event)</a>, <a href="https://ar5iv.arxiv.org/html/1902.03969" target="_blank" rel="noopener">arXiv:1902.03969 (particle events; CME speeds from the NASA DONKI catalog)</a>.</p></div>
+  <div class="grp">Model</div>
+  <div class="card"><ul class="ilist">
+   <li><span data-ic="bone"></span><div>Bone loss about 1.5% per month at the hips, 1.3% femur, 1.1% shins, 1.0% spine without exercise. Exercise cuts it by up to 70%.</div></li>
+   <li><span data-ic="dumbbell"></span><div>Muscle loss rises to about 14% for postural muscle, reduced by exercise.</div></li>
+   <li><span data-ic="eye"></span><div>Eye pressure (SANS), plasma volume and standing risk follow saturating curves over mission days (modelling assumptions).</div></li>
+   <li><span data-ic="radiation"></span><div>Radiation: 0.5 mSv per day baseline plus 0.15 mSv per day for the elevated space weather of September 2017, against a 600 mSv career budget.</div></li>
+   <li><span data-ic="ruler"></span><div>Healthy ranges: WHO BMI and T-score, AHA blood pressure, age-based body fat, 7 to 9 h sleep, 120 min exercise per day.</div></li></ul>
+   <p class="note">Sources: <a href="https://www.nasa.gov/hrp/" target="_blank" rel="noopener">NASA Human Research Program (bone and muscle loss)</a>, <a href="https://www.nasa.gov/wp-content/uploads/2023/03/radiation-protection-technical-brief-ochmo.pdf" target="_blank" rel="noopener">NASA-STD-3001 radiation technical brief (600 mSv limit)</a>, <a href="https://who.int/europe/news-room/fact-sheets/item/nutrition---maintaining-a-healthy-lifestyle" target="_blank" rel="noopener">WHO (BMI ranges)</a>, <a href="https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings" target="_blank" rel="noopener">American Heart Association (blood pressure)</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/10966886/" target="_blank" rel="noopener">Gallagher et al. 2000 (body fat ranges)</a>.</p></div>
+  <div class="grp">Health guide</div>
+  <div class="card"><ul class="ilist">
+   <li><span data-ic="pill"></span><div>Medicine names are common options only. <b>No doses</b>: follow the label and ask the flight surgeon, a doctor or a pharmacist.</div></li>
+   <li><span data-ic="food"></span><div>Daily targets follow NASA nutrition requirements: water 2.5 L (men) or 2.1 L (women), vitamin D 25 µg, calcium 1,000 to 1,200 mg, vitamin K 120/90 µg, vitamin C 125/110 mg.</div></li>
+   <li><span data-ic="alert"></span><div>Urgent warning signs are always shown.</div></li></ul>
+   <p class="note">Sources: <a href="https://ntrs.nasa.gov/api/citations/20205008306/downloads/JSC67378%20Expl%20Nutr%20Reqs%20042020.pdf" target="_blank" rel="noopener">NASA exploration nutrition requirements (JSC-67378)</a>, <a href="https://www.nasa.gov/sites/default/files/atoms/files/human_adaptation_2021_final.pdf" target="_blank" rel="noopener">NASA Human Adaptation to Spaceflight: The Role of Food and Nutrition</a>, <a href="https://doi.org/10.1038/s41526-024-00414-3" target="_blank" rel="noopener">Diaz et al. 2024, ISS medication use, npj Microgravity</a>.</p></div>
+  <p class="note" style="margin-top:14px">Educational prototype for NASA Space Apps. Not a medical device, not medical advice, and not affiliated with or endorsed by NASA.</p>
+</section>
+</main></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
